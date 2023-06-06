@@ -25,40 +25,10 @@ class Day02 {
     }
 
     private fun partOne(lines: List<String>) {
-        println(
-            lines.fold(0) { acc: Int, dimensions: String ->
-                acc + getSurfaceForGift(dimensions)
-            }
-        )
-    }
 
-    private fun getSurfaceForGift(dimensions: String): Int {
-        val parsedDimensions = dimensions.split("x").map { it.toInt() }.sorted()
-        val surfaces = listOf(
-            parsedDimensions[0] * parsedDimensions[1],
-            parsedDimensions[1] * parsedDimensions[2],
-            parsedDimensions[2] * parsedDimensions[0],
-        ).sorted()
-
-        return surfaces[0] * 3 + surfaces[1] * 2 + surfaces[2] * 2
     }
 
     private fun partTwo(lines: List<String>) {
-        println(
-            lines.fold(0) { acc: Int, dimensions: String ->
-                acc + getRibbonForGift(dimensions)
-            }
-        )
-    }
 
-    private fun getRibbonForGift(dimensions: String): Int {
-        val parsedDimensions = dimensions.split("x").map { it.toInt() }.sorted()
-        val perimeters = listOf(
-            parsedDimensions[0] * 2 + parsedDimensions[1] * 2,
-            parsedDimensions[1] * 2 + parsedDimensions[2] * 2,
-            parsedDimensions[2] * 2 + parsedDimensions[0] * 2,
-        ).sorted()
-
-        return perimeters[0] + parsedDimensions[0] * parsedDimensions[1] * parsedDimensions[2]
     }
 }
