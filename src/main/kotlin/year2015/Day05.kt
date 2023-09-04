@@ -1,6 +1,5 @@
 package year2015
 
-import utils.getPuzzleInput
 import utils.logMeasureTime
 import java.io.File
 
@@ -26,13 +25,20 @@ class Day05 {
     }
 
     private fun partOne(lines: List<String>) {
-        println()
+        val regex = """[aeiou]""".toRegex() // just a first try for first condition
+        val thirdCondition = """ab|cd|pq|xy""".toRegex()
 
+        println(lines.fold(0) { acc: Int, s: String ->
+            acc + if (thirdCondition.containsMatchIn(s)){
+                -1
+            } else if (regex.containsMatchIn(s)) {
+                +1
+            } else {
+                0
+            }
+        })
     }
 
-    private fun getInput(input: String) :Int{
-        return 0
-    }
     private fun partTwo(lines: List<String>) {
         println(lines)
     }
