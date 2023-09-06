@@ -25,21 +25,34 @@ class Day05 {
     }
 
     private fun partOne(lines: List<String>) {
-        val regex = """[aeiou]""".toRegex() // just a first try for first condition
-        val thirdCondition = """ab|cd|pq|xy""".toRegex()
+        val naughtWordsRegex = ".*(ab|cd|pq|xy).*".toRegex()
 
         println(lines.fold(0) { acc: Int, s: String ->
-            acc + if (thirdCondition.containsMatchIn(s)){
-                -1
-            } else if (regex.containsMatchIn(s)) {
-                +1
+            val vowelCount = s.count { char ->
+                char in listOf('a', 'e', 'i','o', 'u' )
+            }
+
+            val hasSubsequentLetterTwiceInARow = s.zipWithNext().find { it.first == it.second } != null
+
+            if (vowelCount >= 3 && hasSubsequentLetterTwiceInARow && !naughtWordsRegex.matches(s)) {
+             acc + 1
             } else {
-                0
+                acc
             }
         })
     }
+    //--------------   Version plus concise :
+//    private fun partOne(lines: List<String>) {
+//        val naughtyWordsRegex = ".*(ab|cd|pq|xy).*".toRegex()
+//
+//        println(lines.count { s ->
+//            val vowelCount = s.count { char -> char in listOf('a', 'e', 'i', 'o', 'u') }
+//            val hasSubsequentLetterTwiceInARow = s.zipWithNext().any { it.first == it.second }
+//
+//            vowelCount >= 3 && hasSubsequentLetterTwiceInARow && !naughtyWordsRegex.matches(s)
+//        })
+//    }
 
     private fun partTwo(lines: List<String>) {
-        println(lines)
     }
 }
