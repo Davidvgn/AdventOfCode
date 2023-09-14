@@ -54,22 +54,44 @@ class Day05 {
 //    }
 
     private fun partTwo(lines: List<String>) {
-        println(lines.fold(0) { acc: Int, s: String ->
+        println(
+            lines.count { line: String ->
 
-            val makePairs = s.zipWithNext().distinct()
-
-            if (makePairs.size < s.zipWithNext().size) {
-
-                val groupOfThree = s.windowed(3, 1)
-                for (i in groupOfThree) {
-                    if (i.first() == i.last() && i.first() != i[1] ) {
-                        println(s)
-                        return@fold acc + 1
+                val pairsWithIndex = line.mapIndexedNotNull { index, char ->
+                    line.getOrNull(index + 1)?.let { next ->
+                        PairWithIndex(
+                            index = index,
+                            firstChar = char,
+                            secondChar = next
+                        )
                     }
                 }
-            }
-            acc
-        })
 
+                if (
+                    pairsWithIndex.any { pair ->
+                        pairsWithIndex.find { possibleMatchPair ->
+                            pair.firstChar == possibleMatchPair.firstChar
+                                && pair.secondChar == possibleMatchPair.secondChar
+                                && pair.index + 2 < possibleMatchPair.index
+                        } != null
+                    }
+                ) {
+
+                    val groupOfThree = line.windowed(3, 1)
+                    for (i in groupOfThree) {
+                        if (i.first() == i.last()) {
+                            return@count true
+                        }
+                    }
+                }
+                false
+            }
+        )
     }
+
+    data class PairWithIndex(
+        val index: Int,
+        val firstChar: Char,
+        val secondChar: Char
+    )
 }
