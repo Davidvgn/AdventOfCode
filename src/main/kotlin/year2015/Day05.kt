@@ -29,13 +29,13 @@ class Day05 {
 
         println(lines.fold(0) { acc: Int, s: String ->
             val vowelCount = s.count { char ->
-                char in listOf('a', 'e', 'i','o', 'u' )
+                char in listOf('a', 'e', 'i', 'o', 'u')
             }
 
             val hasSubsequentLetterTwiceInARow = s.zipWithNext().find { it.first == it.second } != null
 
             if (vowelCount >= 3 && hasSubsequentLetterTwiceInARow && !naughtWordsRegex.matches(s)) {
-             acc + 1
+                acc + 1
             } else {
                 acc
             }
@@ -54,5 +54,22 @@ class Day05 {
 //    }
 
     private fun partTwo(lines: List<String>) {
+        println(lines.fold(0) { acc: Int, s: String ->
+
+            val makePairs = s.zipWithNext().distinct()
+
+            if (makePairs.size < s.zipWithNext().size) {
+
+                val groupOfThree = s.windowed(3, 1)
+                for (i in groupOfThree) {
+                    if (i.first() == i.last() && i.first() != i[1] ) {
+                        println(s)
+                        return@fold acc + 1
+                    }
+                }
+            }
+            acc
+        })
+
     }
 }
