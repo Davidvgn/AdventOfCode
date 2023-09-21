@@ -34,16 +34,16 @@ class Day06 {
             when {
                 splittedSentence.contains("on") -> {
                     val indexOfNum1 = splittedSentence.indexOf("on") + 1
-                val indexOfNum2 = splittedSentence.indexOf("through") + 1
+                    val indexOfNum2 = splittedSentence.indexOf("through") + 1
 
-                val splittedStart = splittedSentence[indexOfNum1].split(",".toRegex())
-                val splittedEnd = splittedSentence[indexOfNum2].split(",".toRegex())
+                    val splittedStart = splittedSentence[indexOfNum1].split(",".toRegex())
+                    val splittedEnd = splittedSentence[indexOfNum2].split(",".toRegex())
 
-                for (x in splittedStart.first().toInt()..splittedEnd.first().toInt()) {
-                    for (y in splittedStart.last().toInt()..splittedEnd.last().toInt()){
+                    for (x in splittedStart.first().toInt()..splittedEnd.first().toInt()) {
+                        for (y in splittedStart.last().toInt()..splittedEnd.last().toInt()) {
                             lightsOn[x][y] = true
+                        }
                     }
-                }
                 }
 
                 splittedSentence.contains("off") -> {
@@ -54,7 +54,7 @@ class Day06 {
                     val splittedEnd = splittedSentence[indexOfNum2].split(",".toRegex())
 
                     for (x in splittedStart.first().toInt()..splittedEnd.first().toInt()) {
-                        for (y in splittedStart.last().toInt()..splittedEnd.last().toInt()){
+                        for (y in splittedStart.last().toInt()..splittedEnd.last().toInt()) {
                             lightsOn[x][y] = false
                         }
                     }
@@ -68,7 +68,7 @@ class Day06 {
                     val splittedEnd = splittedSentence[indexOfNum2].split(",".toRegex())
 
                     for (x in splittedStart.first().toInt()..splittedEnd.first().toInt()) {
-                        for (y in splittedStart.last().toInt()..splittedEnd.last().toInt()){
+                        for (y in splittedStart.last().toInt()..splittedEnd.last().toInt()) {
                             lightsOn[x][y] = !lightsOn[x][y]
                         }
                     }
@@ -84,10 +84,61 @@ class Day06 {
                 }
             }
         }
-        println("Number of lights turned on: $lightsOnCount")
+        println(lightsOnCount)
     }
 
     private fun partTwo(lines: List<String>) {
-        println("")
+        val gridSize = 1000
+        val lightsOn = Array(gridSize) { IntArray(gridSize) { 0 } }
+
+        for (line in lines) {
+            val splittedSentence = line.split("\\s".toRegex()).toTypedArray()
+
+            when {
+                splittedSentence.contains("on") -> {
+                    val indexOfNum1 = splittedSentence.indexOf("on") + 1
+                    val indexOfNum2 = splittedSentence.indexOf("through") + 1
+
+                    val splittedStart = splittedSentence[indexOfNum1].split(",".toRegex())
+                    val splittedEnd = splittedSentence[indexOfNum2].split(",".toRegex())
+
+                    for (x in splittedStart.first().toInt()..splittedEnd.first().toInt()) {
+                        for (y in splittedStart.last().toInt()..splittedEnd.last().toInt()) {
+                            lightsOn[x][y] = 1
+                        }
+                    }
+                }
+
+                splittedSentence.contains("off") -> {
+                    val indexOfNum1 = splittedSentence.indexOf("off") + 1
+                    val indexOfNum2 = splittedSentence.indexOf("through") + 1
+
+                    val splittedStart = splittedSentence[indexOfNum1].split(",".toRegex())
+                    val splittedEnd = splittedSentence[indexOfNum2].split(",".toRegex())
+
+                    for (x in splittedStart.first().toInt()..splittedEnd.first().toInt()) {
+                        for (y in splittedStart.last().toInt()..splittedEnd.last().toInt()) {
+                            lightsOn[x][y] = 0
+                        }
+                    }
+                }
+
+                splittedSentence.contains("toggle") -> {
+                    val indexOfNum1 = splittedSentence.indexOf("toggle") + 1
+                    val indexOfNum2 = splittedSentence.indexOf("through") + 1
+
+                    val splittedStart = splittedSentence[indexOfNum1].split(",".toRegex())
+                    val splittedEnd = splittedSentence[indexOfNum2].split(",".toRegex())
+
+                    for (x in splittedStart.first().toInt()..splittedEnd.first().toInt()) {
+                        for (y in splittedStart.last().toInt()..splittedEnd.last().toInt()) {
+                            lightsOn[x][y] = 2
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
 }
