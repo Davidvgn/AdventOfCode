@@ -104,7 +104,7 @@ class Day06 {
 
                     for (x in splittedStart.first().toInt()..splittedEnd.first().toInt()) {
                         for (y in splittedStart.last().toInt()..splittedEnd.last().toInt()) {
-                            lightsOn[x][y] = 1
+                            lightsOn[x][y] += 1
                         }
                     }
                 }
@@ -118,7 +118,7 @@ class Day06 {
 
                     for (x in splittedStart.first().toInt()..splittedEnd.first().toInt()) {
                         for (y in splittedStart.last().toInt()..splittedEnd.last().toInt()) {
-                            lightsOn[x][y] = 0
+                            lightsOn[x][y] = (lightsOn[x][y] - 1).coerceAtLeast(0)
                         }
                     }
                 }
@@ -132,13 +132,20 @@ class Day06 {
 
                     for (x in splittedStart.first().toInt()..splittedEnd.first().toInt()) {
                         for (y in splittedStart.last().toInt()..splittedEnd.last().toInt()) {
-                            lightsOn[x][y] = 2
+                            lightsOn[x][y] += 2
                         }
                     }
                 }
             }
         }
 
+        var lightsOnCount = 0
+        for (x in 0 until gridSize) {
+            for (y in 0 until gridSize) {
 
+                    lightsOnCount += lightsOn[x][y]
+                }
+            }
+        println(lightsOnCount)
     }
 }
