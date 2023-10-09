@@ -85,30 +85,32 @@ class Day07 {
             when (operation) {
                 is Operation.Assign -> variableNameValues[operation.variableResult] = operation.variable
                 is Operation.Bitwise -> {
-                    val variable1Resolved: Int = if (operation.variable1 is Variable.Value) {
-                        operation.variable1.value
-                    } else {
-                        variableNameValues[operation.variable1]!!
-                    }
-                    val variable2Resolved: Int = if (operation.variable2 is Variable.Value) {
-                        operation.variable2.value
-                    } else {
-                        variableNameValues[operation.variable2]!!
-                    }
-
-                    when (operation.operator) {
-                        Operator.AND -> variableNameValues[operation.variableResult] =
-                            variable1Resolved and variable2Resolved
-
-                        Operator.OR -> variableNameValues[operation.variableResult] =
-                            variable1Resolved or variable2Resolved
-
-                        Operator.LSHIFT -> variableNameValues[operation.variableResult] =
-                            variable1Resolved shl variable2Resolved
-
-                        Operator.RSHIFT -> variableNameValues[operation.variableResult] =
-                            variable1Resolved shr variable2Resolved
-                    }
+//                    val variable1Resolved: Int = if (operation.variable1 is Variable.Value) {
+//                        operation.variable1.value
+//                    } else {
+//
+//                        variableNameValues[operation.variable1]
+//                    }
+//
+//                    val variable2Resolved: Int = if (operation.variable2 is Variable.Value) {
+//                        operation.variable2.value
+//                    } else {
+//                        variableNameValues[operation.variable2]!!
+//                    }
+//
+//                    when (operation.operator) {
+//                        Operator.AND -> variableNameValues[operation.variableResult] =
+//                            variable1Resolved and variable2Resolved
+//
+//                        Operator.OR -> variableNameValues[operation.variableResult] =
+//                            variable1Resolved or variable2Resolved
+//
+//                        Operator.LSHIFT -> variableNameValues[operation.variableResult] =
+//                            variable1Resolved shl variable2Resolved
+//
+//                        Operator.RSHIFT -> variableNameValues[operation.variableResult] =
+//                            variable1Resolved shr variable2Resolved
+//                    }
                 }
 
                 is Operation.Not -> TODO()
