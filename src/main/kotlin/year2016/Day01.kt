@@ -36,47 +36,46 @@ class Day01 {
         for (element in splitLines.indices) {
             val elementPaired = getElementPaired(splitLines[element])
 
-                if (isAbscissa) {
-                    if (!isNegative) {
-                        if (elementPaired.first == 'R') {
-                            x += elementPaired.second.toInt()
-                            isNegative = false
-                        } else {
-                            x += elementPaired.second.toInt() * -1
-                            isNegative = true
-                        }
+            if (isAbscissa) {
+                if (!isNegative) {
+                    if (elementPaired.first == 'R') {
+                        x += elementPaired.second.toInt()
+                        isNegative = false
                     } else {
-                        if (elementPaired.first == 'L') {
-                            x += elementPaired.second.toInt()
-                            isNegative = false
-                        } else {
-                            x += elementPaired.second.toInt() * -1
-                            isNegative = true
-                        }
+                        x += elementPaired.second.toInt() * -1
+                        isNegative = true
                     }
-                } else{
-                    if (!isNegative) {
-                        if (elementPaired.first == 'L') {
-                            y += elementPaired.second.toInt()
-                            isNegative = false
-                        } else {
-                            y += elementPaired.second.toInt() * -1
-                            isNegative = true
-                        }
+                } else {
+                    if (elementPaired.first == 'L') {
+                        x += elementPaired.second.toInt()
+                        isNegative = false
                     } else {
-                        if (elementPaired.first == 'R') {
-                            y += elementPaired.second.toInt()
-                            isNegative = false
-                        } else {
-                            y += elementPaired.second.toInt() * -1
-                            isNegative = true
-                        }
+                        x += elementPaired.second.toInt() * -1
+                        isNegative = true
                     }
                 }
+            } else {
+                if (!isNegative) {
+                    if (elementPaired.first == 'L') {
+                        y += elementPaired.second.toInt()
+                        isNegative = false
+                    } else {
+                        y += elementPaired.second.toInt() * -1
+                        isNegative = true
+                    }
+                } else {
+                    if (elementPaired.first == 'R') {
+                        y += elementPaired.second.toInt()
+                        isNegative = false
+                    } else {
+                        y += elementPaired.second.toInt() * -1
+                        isNegative = true
+                    }
+                }
+            }
             isAbscissa = !isAbscissa
         }
         println(x.absoluteValue + y.absoluteValue)
-
 
     }
 
@@ -88,5 +87,99 @@ class Day01 {
     }
 
     private fun partTwo(lines: List<String>) {
+        val splitLines = lines.flatMap { entry -> entry.replace(" ", "").split(",") }
+
+        var x = 0
+        var y = 0
+        var isNegative = false
+        var isAbscissa = true
+        var listOfPoint: MutableList<Pair<Int, Int>> = mutableListOf()
+        var indices = 1
+
+        listOfPoint.add(0, Pair(x, y))
+
+        for (element in splitLines.indices) {
+            val elementPaired = getElementPaired(splitLines[element])
+
+            if (isAbscissa) {
+                if (!isNegative) {
+                    if (elementPaired.first == 'R') {
+                        x += elementPaired.second.toInt()
+                        isNegative = false
+                    } else {
+                        x += elementPaired.second.toInt() * -1
+                        isNegative = true
+
+                    }
+                } else {
+                    if (elementPaired.first == 'L') {
+                        x += elementPaired.second.toInt()
+                        isNegative = false
+                    } else {
+                        x += elementPaired.second.toInt() * -1
+                        isNegative = true
+                    }
+                }
+
+
+                if (listOfPoint[indices - 1].first < x) {
+                    for (i in listOfPoint[indices - 1].first..x) {
+                        if (i > listOfPoint[indices - 1].first && i < x) {
+                            listOfPoint.add(indices++, Pair(i, y))
+                        }
+                    }
+                } else {
+
+                    for (i in listOfPoint[indices - 1].first downTo x) {
+                        if (i < listOfPoint[indices - 1].first && i > x) {
+                            listOfPoint.add(indices++, Pair(i, y))
+                        }
+                    }
+                }
+            } else {
+                if (!isNegative) {
+                    if (elementPaired.first == 'L') {
+                        y += elementPaired.second.toInt()
+                        isNegative = false
+                    } else {
+                        y += elementPaired.second.toInt() * -1
+                        isNegative = true
+                    }
+                } else {
+                    if (elementPaired.first == 'R') {
+                        y += elementPaired.second.toInt()
+                        isNegative = false
+                    } else {
+                        y += elementPaired.second.toInt() * -1
+                        isNegative = true
+                    }
+                }
+
+                if (listOfPoint[indices - 1].second < y) {
+                    for (i in listOfPoint[indices - 1].second..y) {
+                        if (i > listOfPoint[indices - 1].second && i < y) {
+
+                            listOfPoint.add(indices++, Pair(x, i))
+                        }
+                    }
+                } else {
+
+                    for (i in listOfPoint[indices - 1].second downTo y) {
+                        if (i < listOfPoint[indices - 1].second && i > y) {
+
+                            listOfPoint.add(indices++, Pair(x, i))
+                        }
+                    }
+                }
+
+            }
+            isAbscissa = !isAbscissa
+
+                listOfPoint.add(indices++, Pair(x, y))
+
+        }
+
+        println(listOfPoint.groupingBy { it }.eachCount().filter { it.value > 1 }.firstNotNullOf { it })
+
     }
 }
